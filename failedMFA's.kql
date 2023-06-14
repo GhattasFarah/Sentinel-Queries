@@ -1,0 +1,7 @@
+//Detects if a user had 10 failed MFA attempts into an app within a 2h time period to detect MFA bombing
+let timeframe = 2h;
+let threshold = 10; //threshold of 10 failed MFA attempts
+SigninLogs
+| where TimeGenerated >= ago(timeframe) and ResultDescription has "MFA"
+| summarize applicationCount = dcount(AppDisplayName) by UserPrincipalName, IPAddress
+| where applicationCount >= threshold
