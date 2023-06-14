@@ -1,0 +1,9 @@
+//Pulls all server names, their Operating system, and Ip address
+//NOTE: this assumes servers or citrix servers have a naming convention that start with 'srv' or 'cit'
+DeviceInfo
+| project OSDistribution, DeviceId
+| join ( DeviceNetworkInfo
+     | where DeviceName startswith 'cit' or DeviceName startswith 'srv'
+     | extend Ip =  tostring(IPAddresses[0].IPAddress)
+     | project DeviceName, Ip, tostring(DeviceId) on $left.DeviceId == $right.DeviceId
+     | summarize by DeviceName, Ip, OSDistribution
