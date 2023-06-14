@@ -1,0 +1,3 @@
+//This queries the device network events to check for usage of WinRM through svchost.exe parent process.
+DeviceNetworkEvents
+| where InitiatingProcessParentFileName == "svchost.exe" and InitiatingProcessFileName contains "winrm"

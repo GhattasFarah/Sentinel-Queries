@@ -1,0 +1,3 @@
+//This query checks if a device has made an attempt, successful, or failed connection.
+DeviceNetworkEvents
+| where RemoteUrl contains "google.com"
